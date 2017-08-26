@@ -14,11 +14,9 @@ namespace GoodDriverProblem
             const string f = "DrivingRecord.txt";
 
             // Declare new List.
-            List<string> names = new List<string>();
-            List<string> times = new List<string>();
-            List<string> miles = new List<string>();
+            List<Driver> Name = new List<Driver>();
 
-            string[] temp = new string[4];
+            TimeSpan time;
 
             // Use using StreamReader for disposing.
             using (StreamReader r = new StreamReader(f))
@@ -27,76 +25,47 @@ namespace GoodDriverProblem
                 string line;
                 while ((line = r.ReadLine()) != null)
                 {
+                    if (line.Contains("Driver"))
+                    {
+                        string[] names = line.Split(' ');
+                        Name.Add(new Driver { Name = names[1] });
+                    }
+
                     if (line.Contains("Trip"))
                     {
                         string[] info = line.Split(' ');
 
+                        time = Convert.ToDateTime(info[3]) - Convert.ToDateTime(info[2]);
 
-                        foreach (string i in info)
+
+                        for (int i = 0; i < Name.Count; i++)
                         {
-                            if (i != "Trip")
+                            if ((info[1]) == Name[i].Name)
                             {
-                                if (i.Contains(':'))
-                                {
-                                    
-                                }
-                                else if (i.Contains('.'))
-                                {
-                                    miles.Add(i);
-                                }
-                                else
-                                {
-                                    names.Add(i);
-                                }
+                                Name[i].MilesDriven += double.Parse(info[4]);
+                                double minutes = Convert.ToDateTime(info[3]).Subtract(Convert.ToDateTime(info[2])).TotalHours;
+                                Name[i].HoursDriven += minutes;
                             }
                         }
                     }
                 }
             }
-            List<string> final = new List<string> { };
-            foreach (string i in names)
+
+
+
+            for (int i = 0; i < Name.Count; i++)
             {
-                if (!final.Contains(i))
+                if (Name[i].MilesDriven > 0)
                 {
-                    final.Add(i);
+                    Console.WriteLine(Name[i].Name + ": " + Convert.ToString(Math.Round(Name[i].MilesDriven)) + " miles @ " + Convert.ToString(Math.Round(Name[i].GetMPH()))+" MPH");
+                }
+                else
+                {
+                    Console.WriteLine(Name[i].Name + ": 0 miles");
                 }
             }
-
-
-            foreach (string s in final)
-            {
-                Console.WriteLine(s);
-            }
-            //foreach (string s in names)
-            //{
-            //    Console.WriteLine(s);
-            //}
-            //foreach (string s in miles)
-            //{
-            //    Console.WriteLine(s);
-            //}
-            //foreach (string s in times)
-            //{
-            //    Console.WriteLine(s);
-            //}
-        }
-    }
-
-    class Trip
-    {
-        public static double TripTime(TimeSpan StartTime, TimeSpan EndTime)
-        {
-            double tripTime = EndTime.Subtract(StartTime).TotalMinutes;
-            return tripTime;
         }
 
-        public static double MPH(TimeSpan start, TimeSpan end)
-        {
 
-            double time = TripTime(start, end);
-            double MilesDriven = 36;
-            double mph = MilesDriven / (time / 60);
-            return mph;
-        }
     }
 }
