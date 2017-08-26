@@ -18,7 +18,7 @@ The lines that start with `Driver` have the names of the drivers on the insuranc
 - The software splits each line creating an array for each line that contains driver in it.
 - From that array it creates objects with a Name property on index 1 of that array.
 
-The lines that start with `Trip` have the name of the driver for that trip, the start time of the trip, end time of the trip, and number of miles traveled for that trip.  
+The lines that start with `Trip` have the name of the driver for that trip, the start time, end time, and number of miles traveled.  
 - The software splits each line that contains `Trip` in them creating an array.
 - From that array it matches the name of the driver who drove with the Name property in the objects list created previously.
 - If a match is found it edits the following properties:
