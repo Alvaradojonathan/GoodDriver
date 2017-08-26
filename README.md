@@ -1,5 +1,5 @@
 # Good Driver
-Working streamreader to calculate average speed and driving distance for a car insurance company. The software will run calculations based on their trips and output a report.
+Working with streamreader to calculate average speed and driving distance for a car insurance company. The software will run calculations based on their trips and output a report.
 
 ### Good Driver Input
 The Good Driver Device reports driving data in a text file called `DrivingRecord.txt`. The file contains the following information:
