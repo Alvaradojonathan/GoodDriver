@@ -52,16 +52,21 @@ namespace GoodDriverProblem
                 }
             }
 
+            // Sort the object list by miles driven in descending order
+            var drivingRecordSorted = from entry in Name
+                                      orderby entry.MilesDriven descending
+                                      select entry;
+
             // Print every objects information to the console from Name list
-            for (int i = 0; i < Name.Count; i++)
+            foreach (Driver i in drivingRecordSorted)
             {
-                if (Name[i].MilesDriven > 0)
+                if (i.MilesDriven > 0)
                 {
-                    Console.WriteLine(Name[i].Name + ": " + Convert.ToString(Math.Round(Name[i].MilesDriven)) + " miles @ " + Convert.ToString(Math.Round(Name[i].GetMPH())) + " MPH");
+                    Console.WriteLine(i.Name + ": " + Math.Round(i.MilesDriven) + " miles @ " + Math.Round(i.GetMPH()) + " MPH");
                 }
                 else
                 {
-                    Console.WriteLine(Name[i].Name + ": 0 miles");
+                    Console.WriteLine(i.Name + ": 0 miles");
                 }
             }
         }
