@@ -18,6 +18,7 @@ namespace GoodDriverProblem
             //Default
         }
 
+        // Calculate MPH
         public double GetMPH()
         {
             double mph = MilesDriven/HoursDriven;

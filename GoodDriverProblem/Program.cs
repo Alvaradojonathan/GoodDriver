@@ -16,8 +16,6 @@ namespace GoodDriverProblem
             // Declare new List.
             List<Driver> Name = new List<Driver>();
 
-            TimeSpan time;
-
             // Use using StreamReader for disposing.
             using (StreamReader r = new StreamReader(f))
             {
@@ -25,39 +23,41 @@ namespace GoodDriverProblem
                 string line;
                 while ((line = r.ReadLine()) != null)
                 {
+                    // Build Name objects list
                     if (line.Contains("Driver"))
                     {
                         string[] names = line.Split(' ');
                         Name.Add(new Driver { Name = names[1] });
                     }
 
+                    // Add property values to driver objects
                     if (line.Contains("Trip"))
                     {
                         string[] info = line.Split(' ');
-
-                        time = Convert.ToDateTime(info[3]) - Convert.ToDateTime(info[2]);
-
-
                         for (int i = 0; i < Name.Count; i++)
                         {
                             if ((info[1]) == Name[i].Name)
                             {
+                                // Assign value to MilesDriven object property
                                 Name[i].MilesDriven += double.Parse(info[4]);
-                                double minutes = Convert.ToDateTime(info[3]).Subtract(Convert.ToDateTime(info[2])).TotalHours;
-                                Name[i].HoursDriven += minutes;
+
+                                // Calculate total hours spent driving
+                                double hours = Convert.ToDateTime(info[3]).Subtract(Convert.ToDateTime(info[2])).TotalHours;
+
+                                // Assign value to HoursDriven object property
+                                Name[i].HoursDriven += hours;
                             }
                         }
                     }
                 }
             }
 
-
-
+            // Print every objects information to the console from Name list
             for (int i = 0; i < Name.Count; i++)
             {
                 if (Name[i].MilesDriven > 0)
                 {
-                    Console.WriteLine(Name[i].Name + ": " + Convert.ToString(Math.Round(Name[i].MilesDriven)) + " miles @ " + Convert.ToString(Math.Round(Name[i].GetMPH()))+" MPH");
+                    Console.WriteLine(Name[i].Name + ": " + Convert.ToString(Math.Round(Name[i].MilesDriven)) + " miles @ " + Convert.ToString(Math.Round(Name[i].GetMPH())) + " MPH");
                 }
                 else
                 {
@@ -65,7 +65,5 @@ namespace GoodDriverProblem
                 }
             }
         }
-
-
     }
 }
