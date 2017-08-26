@@ -50,6 +50,8 @@ namespace GoodDriverProblem
                         }
                     }
                 }
+                // Close streamreader file
+                r.Close();
             }
 
             // Sort the object list by miles driven in descending order
